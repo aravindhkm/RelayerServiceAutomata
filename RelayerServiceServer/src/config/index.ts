@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import BigNumber from "bignumber.js";
 
 const envFound = dotenv.config();
 if (envFound.error) {

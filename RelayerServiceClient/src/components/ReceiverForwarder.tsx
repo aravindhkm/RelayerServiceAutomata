@@ -1,18 +1,14 @@
-import { useEffect, useState, useRef, CSSProperties } from "react";
-import { useMetamask, ConnectMetamask, loadSmartContract } from "../metamask";
-import dapp from "../metamask/dapp";
-import { Dropdown, DropdownButton, ButtonGroup, InputGroup, Form, Button, Modal} from 'react-bootstrap';
+import { useEffect, useState, useRef } from "react";
+import { useMetamask, ConnectMetamask, } from "../metamask";
+import { Dropdown, DropdownButton, InputGroup, Form, Button, Modal} from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import CircleLoader from "react-spinners/ClipLoader";
 import { targetTokenOne, targetTokenTwo, targetTokenThree, receiverForwarder, baseUri, explorerUrl} from "../config/constants";
-import { getTokenBalance, getMetaTxSign } from "../utils/intex";
+import { getTokenBalance, getMetaTxSign } from "../utils";
 import axios from 'axios';
 import Web3 from "web3";
 import BigNumber from "bignumber.js";
 import { truncate } from 'lodash';
-
-
-
 
 export default function HelloMetamask() {
   const [selectedToken, setSelectedToken] = useState<string>(null);
@@ -115,16 +111,7 @@ export default function HelloMetamask() {
                 position: toast.POSITION.TOP_RIGHT
               });
             }
-          });
-
-          
-          // toast.success("Transaction Executed !", {
-          //   position: toast.POSITION.TOP_RIGHT
-          // });
-
-          // setInterval(() => {
-          //   console.log('This will be called every 2 seconds');
-          // }, 2000);        
+          });       
         }          
     }); 
 
@@ -249,48 +236,6 @@ export default function HelloMetamask() {
     window.open(`${explorerUrl}${hashRef.current}`, '_blank');
   };
 
-  // const apiCheck = async() => {
-    
-  //   var metadataConfig = {
-  //     method: 'get',
-  //     url: `${baseUri}/health-check`,
-  //     headers: { 
-  //       'Content-Type': 'application/json', 
-  //       'Access-Control-Allow-Origin': '*'
-  //     }
-  //   };
-    
-  //   const metadataRes = await axios(metadataConfig);
-  //   console.log("metadataRes", metadataRes.data);
-    
-
-  //   // const privatekey = "Hello";
-  //   // const secertkey = "knfkjwhfewf";
-    
-
-  //   // const data = {
-  //   //   privatekey: privatekey,
-  //   //   secertkey : secertkey
-  //   // }
-  //   // var metadataConfig = {
-  //   //   method: 'post',
-  //   //   url: `${baseUri}/encryptPrivateKey`,
-  //   //   headers: { 
-  //   //     'Accept': 'application/json', 
-  //   //     "Access-Control-Allow-Origin": '*',
-  //   //   //   'Authorization':`Bearer ${process.env.PINATA_JWT}`, 
-  //   //   //  // ...data.getHeaders()
-  //   //   },
-  //   //   data : data
-  //   // };
-    
-  //   // // console.log("before execute", args);
-    
-  //   // const metadataRes = await axios(metadataConfig);
-  //   // console.log("metadataRes", metadataRes.data);
-  // }
-
-
   return (
     <div className="flex flex-col items-center bg-slate-100 h-screen justify-center">
       <div className="shadow-lg text-center border border-slate-300 bg-white p-10 rounded-md">
@@ -383,7 +328,6 @@ export default function HelloMetamask() {
         :
         <Modal.Body> 
           <div className="font-extrabold flex items-center justify-center">
-              {/* Hash {truncate(hashRef.current, { length: 12 })}  */}
               <a href="#" onClick={handleClick} className="link-to-show"> Hash - {truncate(hashRef.current, { length: 34 })}</a>
           </div>
          

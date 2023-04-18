@@ -4,7 +4,6 @@ import requestAccounts from "./helpers/requestAccounts";
 import {chainId as currentChainId} from "../config/constants";
 import { toast } from 'react-toastify';
 
-
 type Values = {
   user: User;
   setUser: (values: any) => void;

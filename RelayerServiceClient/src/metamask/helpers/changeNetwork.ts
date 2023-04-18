@@ -1,14 +1,14 @@
 const networks: Record<string, any> = {
   sepolia: {
     chainId: `0x${Number(97).toString(16)}`,
-    chainName: "Sepolia Test Network",
+    chainName: "Binance Test Network",
     nativeCurrency: {
-      name: "SepoliaETH",
-      symbol: "SepoliaETH",
+      name: "BINANCE TEST ETH",
+      symbol: "TBNB",
       decimals: 18,
     },
-    rpcUrls: ["https://rpc.sepolia.dev"],
-    blockExplorerUrls: ["https://sepolia.etherscan.io/"],
+    rpcUrls: ["https://endpoints.omniatech.io/v1/bsc/testnet/public"],
+    blockExplorerUrls: ["https://testnet.bscscan.com/"],
   },
 };
 
