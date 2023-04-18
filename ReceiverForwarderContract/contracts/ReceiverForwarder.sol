@@ -14,12 +14,14 @@ contract ReceiverForwarder is EIP712, Pausable, Ownable {
         address target;
         uint256 tokenAmount;
         uint256 nonce;
+        uint256 expireTime;
         bytes data;
     }
 
     bytes32 private constant _TYPEHASH =
-        keccak256("ReceiverRequest(address from,address target,uint256 tokenAmount,uint256 nonce,bytes data)");
+        keccak256("ReceiverRequest(address from,address target,uint256 tokenAmount,uint256 nonce,uint256 expireTime,bytes data)");
     bytes4 private constant TRANSFER_CALLDATA = 0xa9059cbb;
+    uint256 private constant EXPIRE_TIME_FOR_SIGN = 100;
 
     mapping(address => uint256) private _nonces;
     mapping(address => bool) private _targetContractStatus;
@@ -29,6 +31,7 @@ contract ReceiverForwarder is EIP712, Pausable, Ownable {
     error Invalid_Target_Address();
     error Call_Failed();
     error Signature_Not_Match();
+    error Signature_Expired();
 
     constructor() EIP712("ReceiverForwarder", "V.0.1") {
         _allowedFunction[0xa9059cbb] = true;
@@ -66,7 +69,7 @@ contract ReceiverForwarder is EIP712, Pausable, Ownable {
 
     function verify(ForwardRequest calldata req, bytes calldata signature) public view returns (bool) {
         address signer = _hashTypedDataV4(
-            keccak256(abi.encode(_TYPEHASH, req.from, req.target, req.tokenAmount, req.nonce, keccak256(req.data)))
+            keccak256(abi.encode(_TYPEHASH, req.from, req.target, req.tokenAmount, req.nonce, req.expireTime, keccak256(req.data)))
         ).recover(signature);
         return _nonces[req.from] == req.nonce && signer == req.from;
     }
@@ -76,7 +79,7 @@ contract ReceiverForwarder is EIP712, Pausable, Ownable {
         bytes calldata signature
     ) public whenNotPaused {
         if(!verify(req, signature)) revert Signature_Not_Match();
-        
+        if(req.expireTime < block.number || ((block.number + EXPIRE_TIME_FOR_SIGN) < req.expireTime)) revert Signature_Expired();
         _nonces[req.from] = req.nonce + 1;
 
         if(!_allowedFunction[bytes4(req.data[0:4])]) revert Invalid_CallData();

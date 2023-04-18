@@ -5,7 +5,6 @@ import { ReceiverForwarder } from "../typechain/ReceiverForwarder";
 import { parseEther } from 'ethers/lib/utils';
 import { BigNumber } from "@ethersproject/bignumber";
 
-
 describe("PriceFeed Contract", function () {
   let receiverForwarder : ReceiverForwarder
   let targetTokenInstanceOne : TargetToken
@@ -47,6 +46,8 @@ describe("PriceFeed Contract", function () {
     const getNonce = await receiverForwarder.getNonce(caller.address);
 
     const getChainId = await caller.getChainId();
+    const currentBlock = Number(await caller.provider.getBlockNumber()) + 25;
+    
     const domain = {
       name: 'ReceiverForwarder',
       version: 'V.0.1',
@@ -61,6 +62,7 @@ describe("PriceFeed Contract", function () {
           { name: 'target', type: 'address' },
           { name: 'tokenAmount', type: 'uint256' },
           { name: 'nonce', type: 'uint256' },
+          { name: 'expireTime', type: 'uint256' },
           { name: 'data', type: 'bytes' }
       ]
     };
@@ -70,6 +72,7 @@ describe("PriceFeed Contract", function () {
         target: targetTokenInstanceOne.address,
         tokenAmount: tokenAmount,
         nonce: getNonce,
+        expireTime: currentBlock,
         data: callData
     };
   
@@ -79,6 +82,7 @@ describe("PriceFeed Contract", function () {
       target: targetTokenInstanceOne.address,
       tokenAmount: tokenAmount,
       nonce: getNonce,
+      expireTime: currentBlock,
       data: callData
     }
 
@@ -98,6 +102,7 @@ describe("PriceFeed Contract", function () {
     const beforeUserBalance = await targetTokenInstanceOne.balanceOf(caller.address);
     const callData = await getTransferCallData(receiver.address,tokenAmount);
     const getNonce = Number(await receiverForwarder.getNonce(caller.address)) - 1;
+    const currentBlock = Number(await caller.provider.getBlockNumber()) + 25;
 
     const getChainId = await caller.getChainId();
     const domain = {
@@ -114,6 +119,7 @@ describe("PriceFeed Contract", function () {
           { name: 'target', type: 'address' },
           { name: 'tokenAmount', type: 'uint256' },
           { name: 'nonce', type: 'uint256' },
+          { name: 'expireTime', type: 'uint256' },
           { name: 'data', type: 'bytes' }
       ]
     };
@@ -123,6 +129,7 @@ describe("PriceFeed Contract", function () {
         target: targetTokenInstanceOne.address,
         tokenAmount: tokenAmount,
         nonce: getNonce,
+        expireTime: currentBlock,
         data: callData
     };
   
@@ -132,6 +139,7 @@ describe("PriceFeed Contract", function () {
       target: targetTokenInstanceOne.address,
       tokenAmount: tokenAmount,
       nonce: getNonce,
+      expireTime: currentBlock,
       data: callData
     }
 
@@ -140,13 +148,13 @@ describe("PriceFeed Contract", function () {
     );   
   });
 
-
   it("Expect Revert TransferForm", async function () {
     const tokenAmount = parseEther("2");
 
     const beforeUserBalance = await targetTokenInstanceOne.balanceOf(caller.address);
     const callData = await getTransferFromCallData(caller.address,receiver.address,tokenAmount);
     const getNonce = await receiverForwarder.getNonce(caller.address);
+    const currentBlock = Number(await caller.provider.getBlockNumber()) + 25;
 
     const getChainId = await caller.getChainId();
     const domain = {
@@ -163,6 +171,7 @@ describe("PriceFeed Contract", function () {
           { name: 'target', type: 'address' },
           { name: 'tokenAmount', type: 'uint256' },
           { name: 'nonce', type: 'uint256' },
+          { name: 'expireTime', type: 'uint256' },
           { name: 'data', type: 'bytes' }
       ]
     };
@@ -172,6 +181,7 @@ describe("PriceFeed Contract", function () {
         target: targetTokenInstanceOne.address,
         tokenAmount: tokenAmount,
         nonce: getNonce,
+        expireTime: currentBlock,
         data: callData
     };
   
@@ -181,6 +191,7 @@ describe("PriceFeed Contract", function () {
       target: targetTokenInstanceOne.address,
       tokenAmount: tokenAmount,
       nonce: getNonce,
+      expireTime: currentBlock,
       data: callData
     }
 
@@ -190,6 +201,58 @@ describe("PriceFeed Contract", function () {
 
     const afterUserBalance = await targetTokenInstanceOne.balanceOf(caller.address);
     expect((beforeUserBalance.sub(afterUserBalance))).to.equal(0);   
+  });
+
+  it("Expect Revert Signature Expired Block", async function () {
+    const tokenAmount = parseEther("2");
+
+    const beforeUserBalance = await targetTokenInstanceOne.balanceOf(caller.address);
+    const callData = await getTransferCallData(receiver.address,tokenAmount);
+    const getNonce = await receiverForwarder.getNonce(caller.address);
+    const getChainId = await caller.getChainId();
+    const currentBlock = Number(await caller.provider.getBlockNumber()) + 200; 
+
+    const domain = {
+      name: 'ReceiverForwarder',
+      version: 'V.0.1',
+      chainId: getChainId,
+      verifyingContract: receiverForwarder.address,
+    };
+
+    // The named list of all type definitions
+    const types = {
+      ReceiverRequest: [
+          { name: 'from', type: 'address' },
+          { name: 'target', type: 'address' },
+          { name: 'tokenAmount', type: 'uint256' },
+          { name: 'nonce', type: 'uint256' },
+          { name: 'expireTime', type: 'uint256' },
+          { name: 'data', type: 'bytes' }
+      ]
+    };
+    // The data to sign
+    const value = {
+        from: caller.address,
+        target: targetTokenInstanceOne.address,
+        tokenAmount: tokenAmount,
+        nonce: getNonce,
+        expireTime: currentBlock,
+        data: callData
+    };
+  
+    let signature = await caller._signTypedData(domain, types, value);
+    let ForwardRequest = {
+      from: caller.address,
+      target: targetTokenInstanceOne.address,
+      tokenAmount: tokenAmount,
+      nonce: getNonce,
+      expireTime: currentBlock,
+      data: callData
+    }
+
+    await expect(receiverForwarder.connect(executor).execute(ForwardRequest,signature)).to.be.revertedWith(
+      "Signature_Expired()"
+    );    
   });
 
   async function deployTargetToken(name:string,symbol:string,params:any) {
