@@ -2,6 +2,16 @@
 Receiver smart contract can parse the meta-transaction and handle the user
 transaction within it
 
+### Install
+
+```sh
+git clone https://github.com/aravindhkm/RelayerServiceAutomata.git
+cd RelayerServiceAutomata
+npm install --save
+npx hardhat compile
+npx hardhat test
+```
+
 ### Using Local Environment
 
 
@@ -21,12 +31,4 @@ ETHERSCAN_API_KEY=""
 ```
 
 
-### Install
 
-```sh
-git clone https://github.com/aravindhkm/RelayerServiceAutomata.git
-cd RelayerServiceAutomata
-npm install --save
-npx hardhat compile
-npx hardhat test
-```

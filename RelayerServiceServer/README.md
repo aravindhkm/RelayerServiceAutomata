@@ -3,6 +3,16 @@ Relayer service server can make the transaction.Who make the request based on EI
 
 Please visit the Meta Transactions [https://eips.ethereum.org/EIPS/eip-2771](https://eips.ethereum.org/EIPS/eip-2771)
 
+
+### Install
+
+```sh
+git clone https://github.com/aravindhkm/RelayerServiceAutomata.git
+cd RelayerServiceServer
+npm install --save
+npm run start
+```
+
 ### Using Local Environment
 
 ```bash
@@ -22,15 +32,6 @@ RPCURL=""
 
 ```
 
-
-### Install
-
-```sh
-git clone https://github.com/aravindhkm/RelayerServiceAutomata.git
-cd RelayerServiceServer
-npm install --save
-npm run start
-```
 
 ### API Endpoints
 
