@@ -11,8 +11,12 @@ cp ./env.example .env
 
 # Port number
 PORT=""
+# Receiver Forwarder Contract
+RECEIVERFORWARDERCONTRACT=""
 # Provide the encrypted format private.Please Use the encryptPrivateKey routes for encryption.
 ENCRYPTEDPRIVATEKEY=""
+# Please Provide the secretKey. Which one we used for the encryption.
+SECRETKEY=""
 # RPC URL
 RPCURL=""
 

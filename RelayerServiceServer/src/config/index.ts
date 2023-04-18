@@ -15,7 +15,7 @@ export interface forwardRequest {
 	data : string,
 }
 
-export const receiverForwarderContract: string | undefined = "0x4D261414D9353B96763273A5c2AA3620a5bdea0e"
+export const receiverForwarderContract: string | undefined = process.env.RECEIVERFORWARDERCONTRACT;
 
 export const port: string | undefined = process.env.PORT;
 
