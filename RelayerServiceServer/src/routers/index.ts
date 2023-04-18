@@ -1,6 +1,5 @@
 import express from "express";
 import httpStatus from "http-status";
-import BigNumber from "bignumber.js";
 import { forwardRequest } from "../config";
 import { body, validationResult } from "express-validator";
 import { verifyMetaTx, makeTransaction } from "../services"

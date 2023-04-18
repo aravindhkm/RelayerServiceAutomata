@@ -1,8 +1,7 @@
 import express from "express";
 import bodyParser from 'body-parser';
 import cors from "cors";
-import CryptoJS from "crypto-js";
-import { port, forwardRequest } from "./config";
+import { port } from "./config";
 import router from "./routers";
 
 import helmet from "helmet";
