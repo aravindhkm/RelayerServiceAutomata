@@ -1,17 +1,15 @@
 # RelayerServiceClient
-RelayerServiceClient React app to Web3.
+RelayerServiceClient Multiple users can submit EIP712 structured messages to relayer service.
 
-**App.jsx**
-```
-import { MetamaskProvider } from ". /metamask";
-import HelloMetamask from "./components/HelloMetamask";
 
-export default function App() {
-  return (
-    <MetamaskProvider>
-      <HelloMetamask />
-    </MetamaskProvider>
-  );
-}
+### Install
+
+```sh
+git clone https://github.com/aravindhkm/RelayerServiceAutomata.git
+cd RelayerServiceClient
+npm install --save
+npm run start
 ```
+
+**NOTE:** Do not forget to config file.  `CHAINID` and `BASEURI` and `EXPLORERURL` and `HTTPPROVIDER` and `TARGETONE` and `TARGETTWO` and `TARGETTWO` and `TARGETTHREE` and `RECEIVERFORWARDER`. Please check each and every values before you run the application.
 
