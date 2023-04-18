@@ -33,7 +33,10 @@ export default function HelloMetamask() {
     })();
   }, [selectedToken]);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+      setShow(false)
+      window.location.reload()
+  };
   const handleShow = () => setShow(true);
 
   const getTokenName = (args: any)  => {
@@ -114,22 +117,6 @@ export default function HelloMetamask() {
           });       
         }          
     }); 
-
-    // handleShow();
-    // toast.success("Transaction Executed !", {
-    //   position: toast.POSITION.TOP_RIGHT
-    // });
-
-    // const hash: string = "0x317360ac9d63c71402048b489c7b5a2516c976f77abacef19217d371c3e22e28";
-
-    // const interval = setInterval(() => {
-    //   hashRef.current = hash;
-    //   setLoadingStatus(false);
-    //   console.log('This will be called every 2 seconds');
-    //   console.log("hash print", `${explorerUrl}${hashRef.current}`  );
-      
-    // }, 2000);
-    // return () => clearInterval(interval);
   }
 
   const makeTransaction = async(args: ForwardRequest): Promise<{status: number,message: string,hash: string}> => {
@@ -150,12 +137,6 @@ export default function HelloMetamask() {
     const hash = metadataRes.data.transactionHash;
 
     return {status,message,hash}
-  }
-
-  const setValue = async() => {
-    setInputRef(1);
-    setSelectedToken(targetTokenTwo);   
-    recipientRef.current = "0x041aB2c3e09423C954CCE80cECE5143120E33729";
   }
 
   const onMetaTx = async(): Promise<ForwardRequest> => {
@@ -221,10 +202,6 @@ export default function HelloMetamask() {
                 expireTime : currentBlockNumber,
                 signature : result.result.toString(),
               }
-
-             // console.log("before forwardRequest", forwardRequest);
-
-              // console.log("signature", result.result);
               resolve(forwardRequest);              
         });
       })
