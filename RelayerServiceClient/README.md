@@ -11,5 +11,5 @@ npm install --save
 npm run start
 ```
 
-**NOTE:** Do not forget to config file.  `CHAINID` and `BASEURI` and `EXPLORERURL` and `HTTPPROVIDER` and `TARGETONE` and `TARGETTWO` and `TARGETTWO` and `TARGETTHREE` and `RECEIVERFORWARDER`. Please check each and every values before you run the application.
+**NOTE:** Do not forget to check the config file.  `CHAINID` and `BASEURI` and `EXPLORERURL` and `HTTPPROVIDER` and `TARGETONE` and `TARGETTWO` and `TARGETTWO` and `TARGETTHREE` and `RECEIVERFORWARDER`. Please check each and every values before you run the application.
 
