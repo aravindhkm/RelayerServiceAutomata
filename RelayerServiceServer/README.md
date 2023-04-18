@@ -11,12 +11,10 @@ cp ./env.example .env
 
 # Port number
 PORT=""
-# RPC URL of the TestNet
+# Provide the encrypted format private.Please Use the encryptPrivateKey routes for encryption.
 ENCRYPTEDPRIVATEKEY=""
-# Deployer Wallet Private Key
+# RPC URL
 RPCURL=""
-# Chain EndPoint ApiKey. Here we used for contract verfication
-ETHERSCAN_API_KEY=""
 
 ```
 
@@ -34,18 +32,7 @@ npm run start
 
 List of available routes:
 
-**Auth routes**:\
-`POST /v1/auth/register` - register\
-`POST /v1/auth/login` - login\
-`POST /v1/auth/refresh-tokens` - refresh auth tokens\
-`POST /v1/auth/forgot-password` - send reset password email\
-`POST /v1/auth/reset-password` - reset password\
-`POST /v1/auth/send-verification-email` - send verification email\
-`POST /v1/auth/verify-email` - verify email
-
-**User routes**:\
-`POST /v1/users` - create a user\
-`GET /v1/users` - get all users\
-`GET /v1/users/:userId` - get user\
-`PATCH /v1/users/:userId` - update user\
-`DELETE /v1/users/:userId` - delete user
+**MetaTx routes**:\
+`POST /api/v1/metatx` - register\
+`GET /api/v1/encryptPrivateKey` - login\
+`GET /api/v1/decryptPrivateKey` - refresh auth tokens\
