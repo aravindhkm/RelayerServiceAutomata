@@ -1,9 +1,6 @@
 # RelayerServiceClient
 RelayerServiceClient React app to Web3.
 
-# How to use?
-Wrap your **App** in `<MetamaskProvider></MetamaskProvider>`
-
 **App.jsx**
 ```
 import { MetamaskProvider } from ". /metamask";
