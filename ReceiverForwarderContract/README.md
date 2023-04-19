@@ -8,8 +8,15 @@ transaction within it
 git clone https://github.com/aravindhkm/RelayerServiceAutomata.git
 cd RelayerServiceAutomata
 npm install --save
+
+# Contract Compile
 npx hardhat compile
+
+# Contract Test
 npx hardhat test
+
+# Contract Deploy
+npx hardhat run scripts/deploy.ts --network testnet
 ```
 
 ### Using Local Environment
