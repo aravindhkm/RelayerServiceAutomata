@@ -2,6 +2,8 @@ import express from "express";
 import httpStatus from "http-status";
 import { forwardRequest } from "../config";
 import { body, validationResult } from "express-validator";
+import CryptoJS from "crypto-js"; 
+
 import { verifyMetaTx, makeTransaction } from "../services"
 
 const router = express.Router();
