@@ -1,19 +1,19 @@
 
-export const chainId: number = 97;
+export const chainId: number = 80001;
 
 export const baseUri: string = "http://localhost:8000/api/v1" 
 
-export const explorerUrl: string = "https://testnet.bscscan.com/tx/"
+export const explorerUrl: string = "https://mumbai.polygonscan.com/"
 
-export const httpProvider: string = "https://endpoints.omniatech.io/v1/bsc/testnet/public";
+export const httpProvider: string = "https://polygon-mumbai.g.alchemy.com/v2/7oLk5mW0tCu4BdStvDPX-U0OBNUcpCnP";
 
-export const targetTokenOne: string = "0xE58a1Fb0060a903D96179CB6fc237cfa026D3874";
+export const targetTokenOne: string = "0x7963154ac46b27358eD5C3FA885731A5b6a868b8";
 
-export const targetTokenTwo: string = "0xDFe04A7Fe0e5422c81B3d62a1aBD8b3827A2aAB1";
+export const targetTokenTwo: string = "0x74bBc82C68fc1e83BFA98cb9A2d6ef8241F46d28";
 
-export const targetTokenThree: string = "0xEeb0B4B7F3a5fD0CCe62c6021FB222a9688628f2";
+export const targetTokenThree: string = "0x26540FCfd36262fbfb49Aa4eC6108B20595b796a";
 
-export const receiverForwarder: string = "0x4D261414D9353B96763273A5c2AA3620a5bdea0e";
+export const receiverForwarder: string = "0x19dF92baa9cA6dFAa9021146f3E2d4436DA73b46";
 
 export const tokenAbi : Array<any> = [
 	{

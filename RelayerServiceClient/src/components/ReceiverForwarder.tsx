@@ -31,7 +31,7 @@ export default function HelloMetamask() {
         });
       } 
     })();
-  }, [selectedToken]);
+  }, [selectedToken,user]);
 
   const handleClose = () => {
       setShow(false)
@@ -85,7 +85,7 @@ export default function HelloMetamask() {
       errorToast(errMsg) 
       return;
     };
-    errMsg = tokenDetails.balance == 0 || user.balance == 0 ? "Need Sufficient Balance !" : null;
+    errMsg = tokenDetails.balance == 0 ? "Need Sufficient Balance !" : null;
     if (errMsg != null) {
       errorToast(errMsg) 
       return;
@@ -110,9 +110,10 @@ export default function HelloMetamask() {
               });
             } else {
               setLoadingStatus(false);
-              toast.success(response.message, {
+              toast.error("Transaction Failed", {
                 position: toast.POSITION.TOP_RIGHT
               });
+              setShow(false);
             }
           });       
         }          
@@ -128,14 +129,22 @@ export default function HelloMetamask() {
         'Access-Control-Allow-Origin': '*'
       },
       data : args
-    };    
-    const metadataRes = await axios(metadataConfig);
-    console.log("metadataRes", metadataRes.data);
+    };  
+    
+    let status;
+    let message;
+    let hash;
 
-    const status = metadataRes.data.status;
-    const message = metadataRes.data.message;
-    const hash = metadataRes.data.transactionHash;
-
+    try {
+      const metadataRes = await axios(metadataConfig);
+      console.log("metadataRes", metadataRes.data);
+  
+      status = metadataRes.data.status;
+      message = metadataRes.data.message;
+      hash = metadataRes.data.transactionHash;
+    } catch (e) {
+       console.log("error", e)
+    }
     return {status,message,hash}
   }
 
@@ -210,7 +219,7 @@ export default function HelloMetamask() {
 
   const handleClick = (event: any) => {
     event.preventDefault();
-    window.open(`${explorerUrl}${hashRef.current}`, '_blank');
+    window.open(`${explorerUrl}tx/${hashRef.current}`, '_blank');
   };
 
   return (
