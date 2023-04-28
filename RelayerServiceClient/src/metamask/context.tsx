@@ -67,7 +67,7 @@ const MetamaskProvider = ({ children }: any) => {
 			getUserInfo();
 	
 			if(chainId != currentChainId && chainId != null) {
-				toast.error("Please Change the Network BSC Testnet !", {
+				toast.error("Please Change the Network Polygon Testnet !", {
 					position: toast.POSITION.TOP_RIGHT
 				});
 			}
