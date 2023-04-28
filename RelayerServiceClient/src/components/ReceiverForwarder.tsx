@@ -219,7 +219,7 @@ export default function HelloMetamask() {
 
   const handleClick = (event: any) => {
     event.preventDefault();
-    window.open(`${explorerUrl}+ tx/ + ${hashRef.current}`, '_blank');
+    window.open(`${explorerUrl}tx/${hashRef.current}`, '_blank');
   };
 
   return (
